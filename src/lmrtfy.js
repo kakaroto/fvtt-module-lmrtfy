@@ -99,6 +99,19 @@ class LMRTFY {
                 LMRTFY.abilityModifiers = LMRTFY.parseAbilityModifiers();
                 break;
 
+            case 'sfrpg':
+                LMRTFY.saveRollMethod = 'rollSave';
+                LMRTFY.abilityRollMethod = 'rollAbility';
+                LMRTFY.skillRollMethod = 'rollSkill';
+                LMRTFY.abilities = CONFIG.SFRPG.abilities;
+                LMRTFY.skills = CONFIG.SFRPG.skills;
+                LMRTFY.saves = CONFIG.SFRPG.saves;
+                LMRTFY.normalRollEvent = { shiftKey: false, altKey: false, ctrlKey: false };
+                LMRTFY.advantageRollEvent = { shiftKey: false, altKey: true, ctrlKey: false };
+                LMRTFY.disadvantageRollEvent = { shiftKey: false, altKey: false, ctrlKey: true };
+                LMRTFY.specialRolls = { 'initiative': true, 'deathsave': false, 'perception': true };
+                break;
+
             default:
                 console.error('LMRFTY | Unsupported system detected');
 
@@ -186,7 +199,7 @@ class LMRTFY {
         if (msg.message.flags && msg.message.flags.lmrtfy) {
             if (msg.message.flags.lmrtfy.blind && !game.user.isGM) {
                 msg.content = '<p>??</p>';
-                
+
                 let idx = html[0].innerHTML.indexOf('<div class="message-content">');
                 html[0].innerHTML = html[0].innerHTML.substring(0, idx);
                 html[0].innerHTML += `<div class="message-content">${msg.content}</div>`;
